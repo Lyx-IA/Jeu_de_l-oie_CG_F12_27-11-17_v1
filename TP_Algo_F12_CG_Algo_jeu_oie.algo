@@ -1,0 +1,53 @@
+Algo jeu_oie
+ 
+//BUT: Creer un jeu de l'oie fonctionnel
+//PRINCIPE: le joueur est caracterisé par un nombre de place compris entre 0 et 66
+qui situe sa position sur le jeu de l'oie, sachant qu'apres jet des deux dés, on applique les regles suivantes :
+on avance du nb de case indiqué par la somme des dés, si on arrive juste sur la casse 66, le jeu est terminé, sinon on recule de l'excedent.
+Une oie toute les neuf case, sauf en 63, double le déplacement.
+Une tête de mort a la case 58 renvois en position de départ, case 0
+On s'efforcera, a utiliser au maximum l'emploi de constante.
+Vous vous efforcerez a ecrire un algorithme et un code lisible (et commentaire)
+et vérifier que le jet de dés est valide (entre 2 et 12).
+il est conseillé d'utiliser le modulo pour tester si une case est un multiple de 9
+Le jet de dés pourra se faire manuellement.
+//ENTREES: Jet de dé de l'utilisateur.
+//SORTIES: Position du joueur + condition de victoire/défaite.
+
+CONST
+	case_mort<-58:ENTIER
+	case_fin<-66:ENTIER
+
+VAR
+	pos, des:ENTIER
+
+DEBUT 
+
+	pos<-0 
+	REPETER
+		ECRIRE "Votre position actuelle est ", pos //Pour que l'utilisateur sache où il se trouve
+		REPETER "Entrez le résultat de vos des"			 //L'utilisateur rentrer son jet manuellement
+		LIRE des
+	JUSQU'A (des>=2)ET(des<=12) //Pour que le résultat du dé ne soit pas inférieur ou supérieur à ce qu'il peut être
+	SI pos MOD 9=0 ET pos=63 ET pos>1 ALORS 			//Pour que toutes les cases sauf la 63 soient doublées vu que ce sont deso oies
+		des<-des*2
+	FINSI
+	pos<-pos+des
+	SI pos>66 ALORS
+		pos<-case_fin(pos-case_fin)						 //La 66=condition de victoire
+	FINSI
+	SI pos=case_mort ALORS
+	DEBUT
+		pos=case_mort ECRIRE "Mince.. vous retournez à la case depart" ALORS 
+		pos<-0 											// Fait retourner à la case départ application case 58
+	FIN
+	
+	JUSQU'A pos=case_fin //Répète la boucle jusqu'à la condition de victoire
+	ECRIRE "Victoire !"
+FIN
+
+
+
+
+
+
